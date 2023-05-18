@@ -8,17 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var _config = builder.Configuration;
-var _cnx = _config
-    .GetConnectionString("DevConnection");
+var _cnx = _config.GetConnectionString("DevConnection");
+
 builder.Services
     .AddDbContext<StoreDbContext>(options =>
     {
         options.UseSqlServer(_cnx);
-    }
-    );
+    });
 
 builder.Services
-    .AddTransient<ICategoryRepository, CategoryRepository>(); //se registra la interfaz
+    .AddTransient<ICategoryRepository, CategoryRepository>();
+
+builder.Services
+    .AddTransient<IFavoriteRepository, FavoriteRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
